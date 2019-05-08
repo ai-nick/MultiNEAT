@@ -4204,7 +4204,10 @@ namespace NEAT
         }
         
         boost::accumulators::accumulator_set<double, boost::accumulators::stats<boost::accumulators::tag::variance> > acc;
-        for (unsigned int i = 0; i < point->children.size(); i++){
+
+        int tree_size = point->children.size(); // little optimization, compute size once
+        
+        for (unsigned int i = 0; i < tree_size; i++){
             acc(point->children[i]->weight);)
         }
         return boost::accumulators::variance(acc);
