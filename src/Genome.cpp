@@ -3403,15 +3403,20 @@ namespace NEAT
         {
             // Get the nTree
             std::vector <double> root_coord;
+            
             root_coord.reserve(coord_len);
+            
             for(unsigned int c_len = 0; c_len < coord_len; c_len++)
             {
-                root_coord.push(0.0);
+                root_coord.push_back(0.0);
             }
             root = boost::shared_ptr<nTree>(
-                    new nTree(params.nTreeCoord, params.Width, params.Height, 1));
+                    new nTree(root_coord, params.Width, 1));
+            
             DivideInitializeND(subst.m_input_coords[i], root, t_temp_phenotype, params, true, 0.0);
+            
             TempConnections.clear();
+            
             PruneExpressND(subst.m_input_coords[i], root, t_temp_phenotype, params, TempConnections, true);
 
             for (unsigned int j = 0; j < TempConnections.size(); j++)
@@ -3441,6 +3446,7 @@ namespace NEAT
                 net.m_connections.push_back(tc);
 
             }
+
         }
         // Hidden to hidden.
         // Basically the same procedure as above repeated IterationLevel times (see the params)
@@ -3450,11 +3456,19 @@ namespace NEAT
             boost::unordered_map<std::vector<double>, int>::iterator itr_hid;
             for (itr_hid = unexplored_nodes.begin(); itr_hid != unexplored_nodes.end(); itr_hid++)
             {
+                std::vector <double> root_coord;
+            
+                root_coord.reserve(coord_len);
+                
+                for(unsigned int c_len = 0; c_len < coord_len; c_len++)
+                {
+                    root_coord.push_back(0.0);
+                }
                 root = boost::shared_ptr<nTree>(
-                        new nTree(params.nTreeCoord, params.Width, params.Height, 1));
+                        new nTree(root_coord, params.Width, 1));
                 DivideInitializeND(itr_hid->first, root, t_temp_phenotype, params, true, 0.0);
                 TempConnections.clear();
-                PruneExpress(itr_hid->first, root, t_temp_phenotype, params, TempConnections, true);
+                PruneExpressND(itr_hid->first, root, t_temp_phenotype, params, TempConnections, true);
                 //root.reset();
 
                 for (unsigned int k = 0; k < TempConnections.size(); k++)
@@ -3499,8 +3513,16 @@ namespace NEAT
         // existing hidden nodes and no new nodes are added.
         for (unsigned int i = 0; i < output_count; i++)
         {
+            std::vector <double> root_coord;
+
+            root_coord.reserve(coord_len);
+                
+            for(unsigned int c_len = 0; c_len < coord_len; c_len++)
+            {
+                root_coord.push_back(0.0);
+            }
             root = boost::shared_ptr<nTree>(
-                    new nTree(params.nTreeCoord, params.Width, params.Height, 1));
+                    new nTree(root_coord, params.Width, params.Height, 1));
             DivideInitialize(subst.m_output_coords[i], root, t_temp_phenotype, params, false, 0.0);
             TempConnections.clear();
             PruneExpress(subst.m_output_coords[i], root, t_temp_phenotype, params, TempConnections, false);

@@ -679,23 +679,24 @@ namespace NEAT
             double leo = 0.0;
             std::vector<boost::shared_ptr<nTree> > children;
 
-            nTree(std::vector<double> coord_in, double wdth, double level)
+            nTree(std::vector<double> coord_in, double wdth, int level)
             {
                 width = wdth;
                 lvl = level;
                 coord = coord_in;
             };
 
-            public void set_children()
+            void set_children()
             {
-                for(unsigned int ix = 0; ix < 2**coord.size(); ix++){
+                long unsigned int loop_count = pow(2, coord.size());
+                for(long unsigned int ix = 0; ix < loop_count; ix++){
                     std::string sum_permute = toBinary(ix, coord.size());
                     std::vector<double> child_coords;
                     int child_param_len = sum_permute.length();
                     child_coords.reserve(child_param_len);
                     for(unsigned int sign_ix = 0; sign_ix < child_param_len; sign_ix++)
                     {
-                        if(sum_permute[sign_ix] == "0")
+                        if(sum_permute[sign_ix] == 0)
                         {
                             child_coords.push_back(coord[sign_ix] + width/2.0);
                         }
@@ -703,7 +704,7 @@ namespace NEAT
                         {
                             child_coords.push_back(coord[sign_ix] - width/2.0);
                         }
-                        children.push_back(new nTree(child_coords, width/2.0, sslvl+1));
+                        children.push_back(boost::shared_ptr<nTree>(new nTree(child_coords, width/2.0, lvl+1)));
                     }
                 }
             }
