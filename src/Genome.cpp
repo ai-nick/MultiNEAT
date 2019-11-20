@@ -3522,8 +3522,8 @@ namespace NEAT
                 root_coord.push_back(0.0);
             }
             root = boost::shared_ptr<nTree>(
-                    new nTree(root_coord, params.Width, params.Height, 1));
-            DivideInitialize(subst.m_output_coords[i], root, t_temp_phenotype, params, false, 0.0);
+                    new nTree(root_coord, params.Width, 1));
+            DivideInitializeND(subst.m_output_coords[i], root, t_temp_phenotype, params, false, 0.0);
             TempConnections.clear();
             PruneExpress(subst.m_output_coords[i], root, t_temp_phenotype, params, TempConnections, false);
 
