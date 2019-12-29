@@ -3482,7 +3482,7 @@ namespace NEAT
                         target_index = hidden_counter++;
                         hidden_nodes.insert(std::make_pair(TempConnections[k].target, target_index));
                     }
-                    else if(!params.feed_forward) // TODO: This can be skipped if building a feed forwad network.
+                    else // TODO: This can be skipped if building a feed forwad network.
                     {
                         target_index = hidden_nodes.find(TempConnections[k].target)->second;
                     }
@@ -3525,7 +3525,7 @@ namespace NEAT
                     new nTree(root_coord, params.Width, 1));
             DivideInitializeND(subst.m_output_coords[i], root, t_temp_phenotype, params, false, 0.0);
             TempConnections.clear();
-            PruneExpress(subst.m_output_coords[i], root, t_temp_phenotype, params, TempConnections, false);
+            PruneExpressND(subst.m_output_coords[i], root, t_temp_phenotype, params, TempConnections, false);
 
             for (unsigned int j = 0; j < TempConnections.size(); j++)
             {
@@ -3817,7 +3817,7 @@ namespace NEAT
                                   Parameters &params,
                                   const bool &outgoing)
     {
-        int cpp_depth = 8;
+        int cppn_depth = 8;
         
         // some of the division, the permutation of center points in particular
         // has been included with the tree struct
@@ -3830,7 +3830,7 @@ namespace NEAT
         while(!q.empty())
         {
             p = q.front();
-            p.set_children();
+            p->set_children();
             for (unsigned int i = 0; i < p->children.size(); i++)
             {
                 t_inputs.clear();
@@ -3868,8 +3868,8 @@ namespace NEAT
 
             }
 
-            if ((p->level < params.InitialDepth) ||
-                ((p->level < params.MaxDepth) && Variance(p) > params.DivisionThreshold))
+            if ((p->lvl < params.InitialDepth) ||
+                ((p->lvl < params.MaxDepth) && VarianceND(p) > params.DivisionThreshold))
             {
                 for(unsigned int add_idx = 0; add_idx < p->children.size(); add_idx)
                 {

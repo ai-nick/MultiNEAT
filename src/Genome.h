@@ -731,6 +731,12 @@ namespace NEAT
         void BuildESHyperNEATPhenotypeND(NeuralNetwork &a_net, Substrate &subst, Parameters &params);
         void BuildESHyperNEATPhenotype(NeuralNetwork &a_net, Substrate &subst, Parameters &params);
 
+            void DivideInitializeND(const std::vector<double> &node,
+                                  boost::shared_ptr<nTree> &root,
+                                  NeuralNetwork &cppn,
+                                  Parameters &params,
+                                  const bool &outgoing);
+
         void DivideInitialize(const std::vector<double> &node,
                               boost::shared_ptr<QuadPoint> &root,
                               NeuralNetwork &cppn, Parameters &params,
@@ -754,7 +760,7 @@ namespace NEAT
         void CollectValues(std::vector<double> &vals, boost::shared_ptr<QuadPoint> &point);
 
         double Variance(boost::shared_ptr<QuadPoint> &point);
-
+        double VarianceND(boost::shared_ptr<nTree> &point)
         void Clean_Net(std::vector<Connection> &connections, unsigned int input_count,
                        unsigned int output_count, unsigned int hidden_count);
 
