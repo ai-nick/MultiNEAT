@@ -3995,7 +3995,7 @@ namespace NEAT
         {
             for (unsigned int i = 0; i < root->children.size(); i++)
             {
-                if(Variance(root->children[i]) > params.VarianceThreshold)
+                if(VarianceND(root->children[i]) > params.VarianceThreshold)
                 {
                     PruneExpressND(node, root->children[i], cppn, params, connections, outgoing);
                 }
@@ -4018,11 +4018,11 @@ namespace NEAT
                         {
                             if(c2_ix == c_ix)
                             {
-                                inputs.append(root->children[i].coord.at(c2_ix));
-                                inputs2.append(root->children[i]->coord.at(c2_ix));
+                                inputs.push_back(root->children[i]->coord.at(c2_ix));
+                                inputs2.push_back(root->children[i]->coord.at(c2_ix));
                             } else {
-                                inputs.append(dimen_split2);
-                                inputs2.append(dimen_split1);
+                                inputs.push_back(dimen_split2);
+                                inputs2.push_back(dimen_split1);
                             }
                         }
                         if(outgoing)
@@ -4220,7 +4220,7 @@ namespace NEAT
         return;
     }
 
-    double Genome::VarianceND(boost::shared_ptr<nTree> &point){
+        {
         if(point->children.size() == 0){
             return 0.0;
         }

@@ -760,7 +760,9 @@ namespace NEAT
         void CollectValues(std::vector<double> &vals, boost::shared_ptr<QuadPoint> &point);
 
         double Variance(boost::shared_ptr<QuadPoint> &point);
-        double VarianceND(boost::shared_ptr<nTree> &point)
+        
+        double VarianceND(boost::shared_ptr<nTree> &point);
+        
         void Clean_Net(std::vector<Connection> &connections, unsigned int input_count,
                        unsigned int output_count, unsigned int hidden_count);
 
